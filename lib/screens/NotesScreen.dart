@@ -12,7 +12,14 @@ class _NotesScreenState extends State<NotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      b
+      //BACKGROUND COLOR........................................................
+      backgroundColor: Color.fromRGBO(8, 8, 8, 1),
+
+      //APP BAR.................................................................
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(8, 8, 8, 1),
+      ),
+
 
     );
   }
