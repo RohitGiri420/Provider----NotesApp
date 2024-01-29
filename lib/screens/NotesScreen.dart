@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:providernoteapp/widgets/UiHelper.dart';
 
 class NotesScreen extends StatefulWidget {
   const NotesScreen({super.key});
@@ -18,6 +19,7 @@ class _NotesScreenState extends State<NotesScreen> {
       //APP BAR.................................................................
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(8, 8, 8, 1),
+        title: UiHelper().CustomAppBar(),
       ),
 
 
