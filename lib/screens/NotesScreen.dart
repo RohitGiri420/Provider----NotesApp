@@ -102,12 +102,13 @@ class _NotesScreenState extends State<NotesScreen> {
                     {
                       return SingleChildScrollView(
                         child: Container(
+                          height: 500,
 
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               SizedBox(height: 50,),
-                              Text("Add Notes", style: TextStyle(
+                              Text("update Notes", style: TextStyle(
                                   fontFamily: "Custom",
                                   fontSize: 25,
                                   fontWeight: FontWeight.w700,
@@ -149,6 +150,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
           return SingleChildScrollView(
             child: Container(
+              height: 500,
 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
