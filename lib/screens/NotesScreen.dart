@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:providernoteapp/database/DbHelper.dart';
+import 'package:providernoteapp/model/NoteModel.dart';
 import 'package:providernoteapp/widgets/UiHelper.dart';
 
 class NotesScreen extends StatefulWidget {
@@ -11,8 +15,26 @@ class NotesScreen extends StatefulWidget {
 class _NotesScreenState extends State<NotesScreen> {
 
   List<int> arrlist = [];
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descController = TextEditingController();
+
+  UiHelper uihelper = UiHelper();
 
   UiHelper ui = UiHelper();
+
+
+  addData(String title,String desc){
+    if(title==""||desc=="") {
+      log("Enter rquired Field");
+    }
+    else{
+      DbHelper().addData(NotesModel(Title: title, Desc: desc));
+    }
+  }
+
+  getData(){
+    arrlist = DbHelper().getData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,31 +61,69 @@ class _NotesScreenState extends State<NotesScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  ui.CustomFilterContainer("All (70)"),
-                  SizedBox(width: 20,),
-                  ui.CustomFilterContainer("Important"),
-                  SizedBox(width: 20,),
-                  ui.CustomFilterContainer("Bookmarked"),
-                  SizedBox(width: 20,),
-                  ui.CustomFilterContainer("Trashed"),
+                  ui.CustomFilterContainer("All (70)",Colors.white,Colors.black54),
+                  SizedBox(width: 15,),
+                  ui.CustomFilterContainer("Important",Colors.black,Colors.white),
+                  SizedBox(width: 15,),
+                  ui.CustomFilterContainer("Bookmarked",Colors.black,Colors.white),
+                  SizedBox(width: 15,),
+                  ui.CustomFilterContainer("Trashed",Colors.black,Colors.white),
                           ],
               ),
             ),
-
-            ListView.builder(itemBuilder: (context, index) => Card(
-              child: ListTile(
-                title: Text("${arrlist[index]}"),
-                subtitle: Text("${arrlist[index]}"),
+            SizedBox(height: 20,),
+            Expanded(
+              child: ListView.builder(itemBuilder: (context, index) => Card(
+                child: ListTile(
+                  title: Text("hii"),
+                  subtitle: Text("hello"),
+                ),
               ),
-            ),
-            itemCount: arrlist.length,
+              itemCount: 40,
+              ),
             )
-
           ],
         ),
       ),
 
 
+      floatingActionButton: FloatingActionButton(onPressed: (){
+
+        showModalBottomSheet(context: context, builder: (context) {
+
+          return SingleChildScrollView(
+            child: Container(
+
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height: 50,),
+                  Text("Add Notes", style: TextStyle(fontFamily: "Custom",fontSize:25,fontWeight: FontWeight.w700,color: Colors.black54),),
+                  uihelper.CustomTextField(controller: titleController,text: "Title"),
+                  uihelper.CustomTextField(controller: descController,text: "Description"),
+                  ElevatedButton(onPressed: (){
+                    addData(titleController.text.toString(), descController.text.toString());
+                  }, child: Text("Click")),
+
+                ],
+              ),
+            
+            ),
+          );
+
+        },);
+
+      },
+
+
+      child: Icon(Icons.add,color: Colors.white,size: 30,),
+        shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        backgroundColor: Colors.brown.shade100,
+      ),
     );
   }
 }
+

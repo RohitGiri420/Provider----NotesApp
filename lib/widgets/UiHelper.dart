@@ -38,14 +38,50 @@ class UiHelper {
             color: Colors.white),
       );
 
-  CustomFilterContainer(String text)=>Container(
-    child: Padding(
-      padding: const EdgeInsets.only(top: 5,bottom: 5,left: 11,right: 11),
-      child: Text("$text",style: TextStyle(fontFamily: 'Custom', fontSize: 16),),
-    ),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(50)
-    ),
-  );
+  CustomFilterContainer(String text, Color color, Color color2) => Card(
+        shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50),
+            borderSide: BorderSide(width: 1, color: Colors.white54)),
+        child: Container(
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: 5, bottom: 5, left: 11, right: 11),
+            child: Text(
+              "$text",
+              style:
+                  TextStyle(fontFamily: 'Custom', fontSize: 16, color: color2),
+            ),
+          ),
+          decoration: BoxDecoration(
+              color: color, borderRadius: BorderRadius.circular(50)),
+        ),
+      );
+
+  CustomTextField(
+          {required TextEditingController controller,
+          required String text}) =>
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+        child: TextField(
+          controller: controller,
+          style: TextStyle(fontFamily: "Custom", color: Colors.black54),
+          decoration: InputDecoration(
+              prefixIcon: Icon(CupertinoIcons.pencil_ellipsis_rectangle),
+              label: Text(text),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                    style: BorderStyle.solid,
+                  )),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(
+                  color: Colors.black54,
+                  width: 1,
+                ),
+              )),
+        ),
+      );
 }

@@ -28,8 +28,7 @@ class DbHelper {
       path,
       version: 1,
       onCreate: (db, version) {
-        db.execute(
-            "create tableB $TABLENAME($NOTEID INTEGER PRIMARY KEY, $NOTETITLE TEXT, $NOTEDESC TEXT)");
+        db.execute("create table $TABLENAME($NOTEID integer primary key autoincrement , $NOTETITLE text, $NOTEDESC text)");
       },
     );
   }
@@ -40,6 +39,16 @@ class DbHelper {
     var check = await Db.insert("$TABLENAME", notesModel.tooMap());
     return check>0;
   }
-
-
+  
+  Future<List<NotesModel>> getData()async{
+    
+    var db = await getDb();
+    List<NotesModel> arrlist = [];
+   var data = await db.query(TABLENAME);
+    for(Map<String,dynamic> eachdata in data){
+      NotesModel notesModel= NotesModel.fromMap(eachdata);
+      arrlist.add(notesModel);
+    }
+    return arrlist;
+  }
 }
