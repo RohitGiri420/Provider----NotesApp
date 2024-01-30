@@ -14,7 +14,7 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
 
-  List<int> arrlist = [];
+  List<NotesModel> arrlist = [];
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
 
@@ -32,8 +32,18 @@ class _NotesScreenState extends State<NotesScreen> {
     }
   }
 
-  getData(){
-    arrlist = DbHelper().getData();
+  getData()async {
+    arrlist = await DbHelper().getData();
+    setState(() {
+
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
   }
   @override
   Widget build(BuildContext context) {
@@ -75,11 +85,11 @@ class _NotesScreenState extends State<NotesScreen> {
             Expanded(
               child: ListView.builder(itemBuilder: (context, index) => Card(
                 child: ListTile(
-                  title: Text("hii"),
-                  subtitle: Text("hello"),
+                  title: Text("${arrlist[index].Title}"),
+                  subtitle: Text("${arrlist[index].Desc}"),
                 ),
               ),
-              itemCount: 40,
+              itemCount: arrlist.length,
               ),
             )
           ],
@@ -103,6 +113,8 @@ class _NotesScreenState extends State<NotesScreen> {
                   uihelper.CustomTextField(controller: descController,text: "Description"),
                   ElevatedButton(onPressed: (){
                     addData(titleController.text.toString(), descController.text.toString());
+                    getData();
+                    Navigator.pop(context);
                   }, child: Text("Click")),
 
                 ],
