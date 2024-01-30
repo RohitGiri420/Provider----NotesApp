@@ -17,6 +17,8 @@ class _NotesScreenState extends State<NotesScreen> {
   List<NotesModel> arrlist = [];
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
+  TextEditingController updatedtitleController = TextEditingController();
+  TextEditingController updateddescController = TextEditingController();
 
   UiHelper uihelper = UiHelper();
 
@@ -37,6 +39,16 @@ class _NotesScreenState extends State<NotesScreen> {
     setState(() {
 
     });
+  }
+
+  updateData(String title,String desc,int id){
+    if(title==""||desc==""){
+      log("enter required field");
+    }
+    else{
+      DbHelper().UpdateData(NotesModel(Title: title, Desc: desc,NoteID: id));
+      log("data updated sucessfully");
+    }
   }
 
   @override
@@ -85,8 +97,42 @@ class _NotesScreenState extends State<NotesScreen> {
             Expanded(
               child: ListView.builder(itemBuilder: (context, index) => Card(
                 child: ListTile(
+                  onTap: () {
+                    showModalBottomSheet(context: context, builder: (context)
+                    {
+                      return SingleChildScrollView(
+                        child: Container(
+
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 50,),
+                              Text("Add Notes", style: TextStyle(
+                                  fontFamily: "Custom",
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black54),),
+                                  uihelper.CustomTextField(controller: updatedtitleController, text: "Title"),
+                                  uihelper.CustomTextField(controller: updateddescController, text: "Description"),
+                              ElevatedButton(onPressed: () {
+                                updateData(updatedtitleController.text.toString(), updateddescController.text.toString(), arrlist[index].NoteID!);
+                                getData();
+                                Navigator.pop(context);
+                              }, child: Text("Update")),
+
+                            ],
+                          ),
+
+                        ),
+                      );
+                    });
+                  },
                   title: Text("${arrlist[index].Title}"),
                   subtitle: Text("${arrlist[index].Desc}"),
+                  trailing: IconButton(onPressed: (){
+                    DbHelper().deleteNote(arrlist[index].NoteID!);
+                    getData();
+                  },icon: Icon(Icons.delete_rounded)),
                 ),
               ),
               itemCount: arrlist.length,
@@ -115,7 +161,7 @@ class _NotesScreenState extends State<NotesScreen> {
                     addData(titleController.text.toString(), descController.text.toString());
                     getData();
                     Navigator.pop(context);
-                  }, child: Text("Click")),
+                  }, child: Text("Save")),
 
                 ],
               ),

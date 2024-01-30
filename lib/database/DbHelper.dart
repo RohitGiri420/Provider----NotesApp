@@ -39,9 +39,15 @@ class DbHelper {
     var check = await Db.insert("$TABLENAME", notesModel.tooMap());
     return check>0;
   }
-  
+
+
+  Future UpdateData(NotesModel notesModel) async{
+    var db=await getDb();
+    await db.update(TABLENAME,notesModel.tooMap(),where: "$NOTEID = ${notesModel.NoteID}" );
+  }
+
+
   Future<List<NotesModel>> getData()async{
-    
     var db = await getDb();
     List<NotesModel> arrlist = [];
    var data = await db.query(TABLENAME);
@@ -50,5 +56,10 @@ class DbHelper {
       arrlist.add(notesModel);
     }
     return arrlist;
+  }
+
+  Future deleteNote(int Id) async{
+    var db = await getDb();
+    await db.delete(TABLENAME,where:"$NOTEID=?",whereArgs:[Id.toString()]);
   }
 }
