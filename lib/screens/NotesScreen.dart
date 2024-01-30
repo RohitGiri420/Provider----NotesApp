@@ -10,6 +10,8 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
 
+  List<int> arrlist = [];
+
   UiHelper ui = UiHelper();
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,15 @@ class _NotesScreenState extends State<NotesScreen> {
                   ui.CustomFilterContainer("Trashed"),
                           ],
               ),
+            ),
+
+            ListView.builder(itemBuilder: (context, index) => Card(
+              child: ListTile(
+                title: Text("${arrlist[index]}"),
+                subtitle: Text("${arrlist[index]}"),
+              ),
+            ),
+            itemCount: arrlist.length,
             )
 
           ],
