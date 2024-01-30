@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:providernoteapp/model/NoteModel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -8,9 +9,9 @@ class DbHelper {
   Database? _database;
 
   static String TABLENAME = "AllNotes";
-  static String NOTEID = "Notes Id";
-  static String NOTETITLE = "Note Title";
-  static String NOTEDESC = "Note Description";
+  static String NOTEID = "NotesId";
+  static String NOTETITLE = "NoteTitle";
+  static String NOTEDESC = "NoteDescription";
 
   Future<Database> getDb() async {
     if (_database != null) {
@@ -32,4 +33,13 @@ class DbHelper {
       },
     );
   }
+
+  Future<bool> addData(NotesModel notesModel) async{
+
+    var Db = await getDb();
+    var check = await Db.insert("$TABLENAME", notesModel.tooMap());
+    return check>0;
+  }
+
+
 }
