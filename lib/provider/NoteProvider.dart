@@ -4,16 +4,18 @@ import 'package:providernoteapp/model/NoteModel.dart';
 
 class NoteProvider extends ChangeNotifier{
   DbHelper db = DbHelper.db;
-  var arrlist;
+  List<NotesModel> arrlist=[];
 
-  addData(NotesModel notesModel){
-    db.addData(notesModel);
-    notifyListeners();
+  addData(NotesModel notesModel) async {
+    var check =await  db.addData(notesModel);
+    if(check) {
+      fetchData();
+    }
   }
 
-  fetchData(){
-    arrlist=db.getData();
-    return arrlist;
+  fetchData() async {
+    arrlist=await db.getData();
+    notifyListeners();
   }
 
 

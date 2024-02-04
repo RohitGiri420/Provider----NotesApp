@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:providernoteapp/provider/NoteProvider.dart';
 import 'package:providernoteapp/screens/NotesScreen.dart';
 
 void main(){
@@ -11,9 +13,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: NotesScreen(),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) =>NoteProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: NotesScreen(),
+      ),
     );
   }
 }
