@@ -80,6 +80,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
                           return Card(
                             child: ListTile(
+                              trailing: IconButton(onPressed: (){ value.deleteData(arrlist[index].NoteID!);},icon: Icon(Icons.delete)),
                               title: Text("${arrlist[index].Title}"),
                               subtitle: Text("${arrlist[index].Desc}"),
                             ),

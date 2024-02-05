@@ -24,5 +24,11 @@ class NoteProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  deleteData(int Id) async{
+    db.deleteNote(Id);
+    arrlist =await db.getData();
+    notifyListeners();
+  }
+
 
 }
