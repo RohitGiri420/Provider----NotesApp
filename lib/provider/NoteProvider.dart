@@ -7,12 +7,18 @@ class NoteProvider extends ChangeNotifier{
   List<NotesModel> arrlist=[];
 
   addData(NotesModel notesModel) async {
-    var check =await  db.addData(notesModel);
-    if(check) {
-      fetchData();
+    var check = await db.addData(notesModel);
+    if(check){
+      arrlist = await db.getData();
+      notifyListeners();
+
     }
   }
 
+  List<NotesModel> getNotes(){
+    fetchData();
+    return arrlist;
+  }
   fetchData() async {
     arrlist=await db.getData();
     notifyListeners();
