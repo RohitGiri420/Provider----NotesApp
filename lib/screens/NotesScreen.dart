@@ -6,6 +6,7 @@ import 'package:providernoteapp/database/DbHelper.dart';
 import 'package:providernoteapp/model/NoteModel.dart';
 import 'package:providernoteapp/provider/NoteProvider.dart';
 import 'package:providernoteapp/screens/addScreen.dart';
+import 'package:providernoteapp/screens/updateScreen.dart';
 import 'package:providernoteapp/widgets/UiHelper.dart';
 
 class NotesScreen extends StatefulWidget {
@@ -83,6 +84,7 @@ class _NotesScreenState extends State<NotesScreen> {
                               trailing: IconButton(onPressed: (){ value.deleteData(arrlist[index].NoteID!);},icon: Icon(Icons.delete)),
                               title: Text("${arrlist[index].Title}"),
                               subtitle: Text("${arrlist[index].Desc}"),
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateScreen(id: arrlist[index].NoteID!),)),
                             ),
                           );
                           }

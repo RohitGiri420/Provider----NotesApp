@@ -21,7 +21,7 @@ class _AddScreenState extends State<AddScreen> {
     }
     else{
       context.read<NoteProvider>().addData(NotesModel(Title: title, Desc: desc));
-    }
+    }     
   }
   @override
   Widget build(BuildContext context) {
